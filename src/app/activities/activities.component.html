@@ -3,10 +3,9 @@
   <datepicker-inline></datepicker-inline>
 
   <div class="w-[37%]" id="divTablas">
-    <table class="w-[100%] table-auto border-collapse">
+    <table class="w-full table-auto border-collapse mt-10">
       <tr class="h-24 text-center">
         <td>
-          <!-- Imagen para ir al día anterior -->
           <img 
             src="../../assets/mingcute_arrows-left-fill.png" 
             alt="Left Arrow" 
@@ -14,11 +13,9 @@
             style="cursor: pointer;">
         </td>
         <td>
-          <!-- Fecha seleccionada -->
           <h1 class="border-none align-middle" id="fecha">{{ selectedDate | date: 'd MMMM yyyy' }}</h1>
         </td>
         <td>
-          <!-- Imagen para ir al día siguiente -->
           <img 
             src="../../assets/mingcute_arrows-right-fill.png" 
             alt="Right Arrow" 
@@ -30,17 +27,62 @@
 
     <!-- Tabla -->
     <table class="w-[90%] h-[370px] table-auto border-collapse align-middle">
-      <tr class="h-24 text-center">
-        <td class="w-12 border-none align-middle">10:00 11:30</td>
-        <td class="bg-[#2B7D3D] text-[#FFFFFF] border-none align-middle">FREE</td>
-      </tr>
-      <tr class="h-24 text-center">
-        <td class="w-12 border-none align-middle">13:30 15:00</td>
-        <td class="bg-[#2B7D3D] text-[#FFFFFF] border-none align-middle">FREE</td>
-      </tr>
-      <tr class="h-24 text-center">
-        <td class="w-12 border-none align-middle">17:30 19:00</td>
-        <td class="bg-[#2B7D3D] text-[#FFFFFF] border-none align-middle">FREE</td>
+      <tr *ngFor="let slot of timeSlots" class="h-24 text-center">
+        <td class="w-12 border-none align-middle">{{ slot }}</td>
+        <td
+          [ngClass]="{
+            'bg-[#D9D9D9]': getActivityForSlot(slot),
+            'bg-[#2B7D3D] text-[#FFFFFF]': !getActivityForSlot(slot)
+          }"
+          class="relative border-none align-middle"
+        >
+          <ng-container *ngIf="getActivityForSlot(slot) as activity; else freeSlot">
+            <div class="flex items-center justify-between w-full">
+              <!-- Avatar y Nombre del Monitor -->
+              <div class="flex items-center flex-col justify-center text-center"  *ngFor="let monitor of activity.monitor">
+                <img src="../../assets/avatar.png" alt="Avatar" class="w-10 h-15 mb-2">
+                <div>
+                  <p class="font-['Inter'] text-lg">{{ monitor.nombre }}</p>
+                </div>
+              </div>
+
+              <!-- Icono de Actividad con margen a la derecha -->
+              <div class="flex items-center mr-16">
+                <img 
+                  src="../../assets/{{activity.tipo}}.png" 
+                  alt="{{ activity.tipo }}" 
+                  class="w-10 h-15"
+                />
+              </div>
+
+              <!-- Contenedor de botones Editar y Borrar -->
+              <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
+                <!-- Botón Borrar con imagen -->
+                <button 
+                  class="bg-transparent p-2 focus:outline-none">
+                  <img 
+                    src="../../assets/trash.png" 
+                    alt="Eliminar" 
+                    class="w-2 h-4" />
+                </button>
+                <!-- Botón Editar con imagen -->
+                <button 
+                  class="bg-transparent p-2 focus:outline-none">
+                  <img 
+                    src="../../assets/pencil.png" 
+                    alt="Editar" 
+                    class="w-2 h-4" />
+                </button>
+              </div>
+               
+            </div>
+          </ng-container>
+          <ng-template #freeSlot>
+            <div class="flex justify-center items-center h-full font-bold text-white">
+              FREE
+            </div>
+          </ng-template>
+        </td>
       </tr>
     </table>
   </div>

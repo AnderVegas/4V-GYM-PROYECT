@@ -56,19 +56,19 @@ export class EntitiesService {
     this.activitys = [
       {
         id: 0,
-        fecha: "21/12/2023, 10:00:00",
+        fecha: "30/12/2024, 10:00 11:30",
         monitor: [this.monitors[0]],
         tipo: ActivityType.BodyPump
       },
       {
         id: 1,
-        fecha: "22/12/2023, 13:30:00",
+        fecha: "29/12/2024, 13:30 15:00",
         monitor: [this.monitors[1]],
         tipo: ActivityType.Pilates
       },
       {
         id: 2,
-        fecha: "23/12/2023, 17:30:00",
+        fecha: "30/12/2024, 17:30 19:00",
         monitor: [this.monitors[1], this.monitors[2]],
         tipo: ActivityType.Spinning
       }
