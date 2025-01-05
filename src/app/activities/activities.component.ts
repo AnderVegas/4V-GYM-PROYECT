@@ -50,4 +50,16 @@ export class ActivitiesComponent implements OnInit {
   previousDate(): void {
     this.dateService.previousDate();
   }
+
+  // Eliminar actividad
+  removeActivitie(activityId: number | undefined): void {
+    if (activityId === undefined) {
+      console.error('Activity ID is undefined');
+      return;
+    }
+    this.entitiesService.removeActivity(activityId);
+    this.activities = this.entitiesService.getActivitys();
+  }
+  
+  
 }

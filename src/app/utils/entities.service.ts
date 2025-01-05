@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 export interface Activity {
-  id?: number;
+  id: number;
   fecha: string;
   monitor: Monitor[];
   tipo: ActivityType;
@@ -30,27 +30,33 @@ export class EntitiesService {
     this.monitors = [
       {
         id: 0,
-        nombre: "Juan",
-        email: "juan@gmail.com",
-        telefono: "948128888"
+        nombre: "Joaquin Rodriguez",
+        email: "jrodri@hotmail.es",
+        telefono: "643231413"
       },
       {
         id: 1,
-        nombre: "Maria",
-        email: "maria@gmail.com",
-        telefono: "676950699"
+        nombre: "Miguel Goyena",
+        email: "miguel_goyena@cuatrovientos.org",
+        telefono: "643231413"
       },
       {
         id: 2,
-        nombre: "Pedro",
-        email: "pedro@gmail.com",
-        telefono: "674735847"
+        nombre: "Lucia Rodriguez",
+        email: "luci@gmail.com",
+        telefono: "643231413"
       },
       {
         id: 3,
-        nombre: "Mikel",
-        email: "mikel@gmail.com",
-        telefono: "696039394"
+        nombre: "Lurdes Dominguez",
+        email: "ldominguez@gmail.com",
+        telefono: "643231413"
+      },
+      {
+        id: 4,
+        nombre: "Juan Cuesta",
+        email: "juanC@gmail.com",
+        telefono: "643231413"
       }
     ]
     this.activitys = [
@@ -71,6 +77,12 @@ export class EntitiesService {
         fecha: "30/12/2024, 17:30 19:00",
         monitor: [this.monitors[1], this.monitors[2]],
         tipo: ActivityType.Spinning
+      },
+      {
+        id: 3,
+        fecha: "02/01/2025, 17:30 19:00",
+        monitor: [this.monitors[1], this.monitors[2]],
+        tipo: ActivityType.Spinning
       }
     ];;
    }
@@ -78,7 +90,12 @@ export class EntitiesService {
   getActivitys(){
    return this.activitys;
   }
+
   getMonitors(){
     return this.monitors;
+  }
+
+  removeActivity(activityId : number){
+    this.activitys = this.activitys.filter(activity => activity.id !== activityId);
   }
 }
