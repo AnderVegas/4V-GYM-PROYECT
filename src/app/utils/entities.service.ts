@@ -57,7 +57,37 @@ export class EntitiesService {
         nombre: "Juan Cuesta",
         email: "juanC@gmail.com",
         telefono: "643231413"
-      }
+      },
+      // {
+      //   id: 0,
+      //   nombre: "Joaquin Rodriguez",
+      //   email: "jrodri@hotmail.es",
+      //   telefono: "643231413"
+      // },
+      // {
+      //   id: 1,
+      //   nombre: "Miguel Goyena",
+      //   email: "miguel_goyena@cuatrovientos.org",
+      //   telefono: "643231413"
+      // },
+      // {
+      //   id: 2,
+      //   nombre: "Lucia Rodriguez",
+      //   email: "luci@gmail.com",
+      //   telefono: "643231413"
+      // },
+      // {
+      //   id: 3,
+      //   nombre: "Lurdes Dominguez",
+      //   email: "ldominguez@gmail.com",
+      //   telefono: "643231413"
+      // },
+      // {
+      //   id: 4,
+      //   nombre: "Juan Cuesta",
+      //   email: "juanC@gmail.com",
+      //   telefono: "643231413"
+      // }
     ]
     this.activitys = [
       {

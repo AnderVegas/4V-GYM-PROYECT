@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';  // Para usar pipes como 'date'
+import { CommonModule } from '@angular/common';
 import { EntitiesService, Monitor } from '../utils/entities.service';
 
 @Component({
@@ -11,41 +11,45 @@ import { EntitiesService, Monitor } from '../utils/entities.service';
 })
 export class MonitorsComponent implements OnInit {
   monitors: Monitor[] = [];
-  visibleMonitors: Monitor[] = [];  // Lista de monitores que se mostrarán en el carrusel
-  currentIndex: number = 0;  // Índice para el primer monitor visible
+  visibleMonitors: Monitor[] = [];
+  currentIndex: number = 0;
+  currentTranslate: number = 0; // Controla el desplazamiento
+  cardWidth: number = 330; // Ancho del card + margen (330px ancho)
+  transitionDuration: string = '0.5s'; // Duración de la transición
 
   constructor(private entitiesService: EntitiesService) {}
 
   ngOnInit(): void {
     this.monitors = this.entitiesService.getMonitors();
-    this.updateVisibleMonitors();  // Inicializar los monitores visibles
+    this.updateVisibleMonitors();
   }
 
-  // Actualiza la lista de monitores visibles (3 a la vez)
   updateVisibleMonitors(): void {
-    const endIndex = this.currentIndex + 3;
-    this.visibleMonitors = this.monitors.slice(this.currentIndex, endIndex);
+    this.visibleMonitors = this.monitors.slice(this.currentIndex, this.currentIndex + 3);
   }
 
-  // Función para ir al monitor anterior
   previousMonitor(): void {
     if (this.currentIndex > 0) {
       this.currentIndex--;
     } else {
-      // Si estamos en el primer grupo, volvemos al final
       this.currentIndex = this.monitors.length - 3;
     }
-    this.updateVisibleMonitors();
+    this.updateTranslate();
   }
 
-  // Función para ir al siguiente monitor
   nextMonitor(): void {
     if (this.currentIndex < this.monitors.length - 3) {
       this.currentIndex++;
     } else {
-      // Si estamos en el último grupo, volvemos al principio
       this.currentIndex = 0;
     }
-    this.updateVisibleMonitors();
+    this.updateTranslate();
+  }
+
+  updateTranslate(): void {
+    // Usamos currentTranslate para controlar el desplazamiento horizontal
+    this.currentTranslate = this.currentIndex * this.cardWidth;
+    // Actualizamos la transición para que sea suave y duradera
+    this.transitionDuration = '0.5s';
   }
 }

@@ -38,15 +38,12 @@
         >
           <ng-container *ngIf="getActivityForSlot(slot) as activity; else freeSlot">
             <div class="flex items-center justify-between w-full">
-              <!-- Avatar y Nombre del Monitor -->
-              <div class="flex items-center flex-col justify-center text-center"  *ngFor="let monitor of activity.monitor">
+              <div class="flex items-center flex-col justify-center text-center" *ngFor="let monitor of activity.monitor">
                 <img src="../../assets/avatar.png" alt="Avatar" class="w-10 h-15 mb-2">
                 <div>
                   <p class="font-['Inter'] text-lg">{{ monitor.nombre }}</p>
                 </div>
               </div>
-
-              <!-- Icono de Actividad con margen a la derecha -->
               <div class="flex items-center mr-16">
                 <img 
                   src="../../assets/{{activity.tipo}}.png" 
@@ -54,39 +51,27 @@
                   class="w-10 h-15"
                 />
               </div>
-
-                <!-- Contenedor de botones Editar y Borrar -->
-                <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
-                  <!-- Botón Borrar con imagen -->
-                  <button 
-                  class="bg-transparent p-2 focus:outline-none"
-                  (click)="activity.id !== undefined && removeActivitie(activity.id)">
-                  <img 
-                    src="../../assets/trash.png" 
-                    alt="Eliminar" 
-                    class="BotonesAccion" />
-                </button>
-
-                <!-- Botón Editar con imagen -->
+              <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
                 <button 
-                  class="bg-transparent p-2 focus:outline-none">
-                  <img 
-                    src="../../assets/pencil.png" 
-                    alt="Editar" 
-                    class="BotonesAccion" />
+                  class="bg-transparent p-2 focus:outline-none"
+                  (click)="removeActivitie(activity.id)">
+                  <img src="../../assets/trash.png" alt="Editar" class="BotonesAccion" />
+                </button>
+                <button 
+                  class="bg-transparent p-2 focus:outline-none"
+                  (click)="openEditActivityModal(activity)">
+                  <img src="../../assets/pencil.png" alt="Eliminar" class="BotonesAccion" />
                 </button>
               </div>
-               
             </div>
           </ng-container>
           <ng-template #freeSlot>
             <div class="flex justify-center items-center h-full font-bold text-white">
               FREE
-              <!-- Contenedor de botones Editar y Borrar -->
               <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
-                <!-- Botón Borrar con imagen -->
                 <button 
-                  class="bg-transparent p-2 focus:outline-none">
+                  class="bg-transparent p-2 focus:outline-none"
+                  (click)="openAddActivityModal(slot)">
                   <img 
                     src="../../assets/add.png" 
                     alt="Añadir" 
@@ -101,4 +86,43 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div 
+  class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
+  *ngIf="isModalOpen"
+>
+  <div class="bg-white p-6 rounded-lg w-[400px]">
+    <h2 class="text-lg font-bold mb-4">{{ isEditing ? 'Editar Actividad' : 'Añadir Actividad' }}</h2>
 
+    <form (ngSubmit)="isEditing ? saveEditedActivity() : addActivity()">
+      <label class="block mb-2">Monitor 1</label>
+<select [(ngModel)]="newActivityMonitor1" name="monitor1" class="w-full mb-4 p-2 border rounded">
+  <option *ngFor="let monitor of monitors" [ngValue]="monitor">{{ monitor.nombre }}</option>
+</select>
+
+<label class="block mb-2">Monitor 2 (Opcional)</label>
+<select [(ngModel)]="newActivityMonitor2" name="monitor2" class="w-full mb-4 p-2 border rounded">
+  <option *ngFor="let monitor of getFilteredMonitors(newActivityMonitor1)" [ngValue]="monitor">
+    {{ monitor.nombre }}
+  </option>
+</select>
+
+
+      <label class="block mb-2">Tipo de Actividad</label>
+      <select [(ngModel)]="newActivityType" name="tipo" class="w-full mb-4 p-2 border rounded">
+        <option *ngFor="let type of activityTypes" [value]="type">{{ type }}</option>
+      </select>
+
+      <button 
+        type="submit" 
+        class="bg-green-500 text-white px-4 py-2 rounded" 
+        [disabled]="!newActivityMonitor1 && !newActivityMonitor2">
+        Guardar
+      </button>
+
+      <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded ml-2" (click)="closeModal()">
+        Cancelar
+      </button>
+    </form>
+  </div>
+</div>

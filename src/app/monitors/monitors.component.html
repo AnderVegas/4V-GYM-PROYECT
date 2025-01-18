@@ -6,7 +6,6 @@
       alt="Search Icon" 
       class="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6"
     />
-    
     <!-- Input de búsqueda -->
     <input
       type="text"
@@ -20,46 +19,46 @@
     class="w-20 h-20 cursor-pointer addIcon"
   />
 </div>
-  
+
 <div class="flex justify-center items-center carrousel mt-10">
-  <table class="w-full table-auto border-collapse">
-    <tr class="h-24 text-center">
-      <!-- Flecha izquierda con margen reducido -->
-      <td class="flex justify-center items-center px-2">
-        <img 
-          src="../../assets/mingcute_arrows-left-fill.png" 
-          alt="Left Arrow" 
-          style="cursor: pointer;" 
-          (click)="previousMonitor()">
-      </td>
-      
-      <td>
-        <!-- Contenedor de los monitores (Carrusel) -->
-        <div class="flex overflow-hidden space-x-6 justify-center items-center">
-          <!-- Mostrar tres monitores en el carrusel -->
-          <div 
-            *ngFor="let monitor of visibleMonitors" 
-            class="flex-shrink-0 w-[360px] h-[250px] bg-[#D9D9D9] p-6 flex flex-col justify-center items-center">
-            <img 
-              src="../../assets/avatar.png" 
-              alt="Avatar" 
-              class="avatarImg w-20 h-20 mb-4"
-            />
-            <h4 class="text-center text-lg font-semibold">{{ monitor.nombre }}</h4>
-            <h4 class="text-center text-lg break-all">{{ monitor.email }}</h4>
-            <h4 class="text-center text-lg">{{ monitor.telefono }}</h4>
-          </div>
-        </div>
-      </td>
-  
-      <!-- Flecha derecha con margen reducido -->
-      <td class="flex justify-center items-center px-2">
-        <img 
-          src="../../assets/mingcute_arrows-right-fill.png" 
-          alt="Right Arrow" 
-          style="cursor: pointer;" 
-          (click)="nextMonitor()">
-      </td>
-    </tr>
-  </table>
+  <!-- Flecha Izquierda -->
+  <img 
+    src="../../assets/mingcute_arrows-left-fill.png" 
+    alt="Left Arrow" 
+    class="cursor-pointer mx-2" 
+    (click)="previousMonitor()"
+  />
+
+  <!-- Contenedor del Carrusel -->
+<div class="overflow-hidden w-[1038px] ">
+  <!-- Carrusel de Cards -->
+  <div 
+    class="flex transition-transform duration-500 ease-in-out gap-x-4"
+    [style.transform]="'translateX(-' + currentTranslate + 'px)'"
+  >
+    <div 
+      *ngFor="let monitor of monitors" 
+      class="flex-shrink-0 w-[330px] h-[250px] bg-[#D9D9D9] p-6 flex flex-col justify-center items-center"
+    >
+      <img 
+        src="../../assets/avatar.png" 
+        alt="Avatar" 
+        class="avatarImg w-20 h-20 mb-4"
+      />
+      <h4 class="text-center text-lg font-semibold">{{ monitor.nombre }}</h4>
+      <h4 class="text-center text-lg break-all">{{ monitor.email }}</h4>
+      <h4 class="text-center text-lg">{{ monitor.telefono }}</h4>
+    </div>
+  </div>
 </div>
+
+
+  <!-- Flecha Derecha -->
+  <img 
+    src="../../assets/mingcute_arrows-right-fill.png" 
+    alt="Right Arrow" 
+    class="cursor-pointer mx-2" 
+    (click)="nextMonitor()"
+  />
+</div>
+
