@@ -128,4 +128,22 @@ export class EntitiesService {
   removeActivity(activityId : number){
     this.activitys = this.activitys.filter(activity => activity.id !== activityId);
   }
+
+  removeMonitors(monitorId : number){
+    this.monitors = this.monitors.filter(monitor => monitor.id !== monitorId);
+  }
+
+  updateMonitor(updatedMonitor: Monitor): void {
+    const index = this.monitors.findIndex(monitor => monitor.id === updatedMonitor.id);
+    if (index !== -1) {
+      this.monitors[index] = updatedMonitor;
+    }
+  }
+
+  addMonitor(monitor: Monitor): void {
+  monitor.id = this.monitors.length; // Asignamos un ID único
+  this.monitors.push(monitor); // Agregar el nuevo monitor a la lista
+}
+
+
 }

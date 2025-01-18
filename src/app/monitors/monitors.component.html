@@ -8,16 +8,22 @@
     />
     <!-- Input de búsqueda -->
     <input
-      type="text"
-      class="w-full h-full pl-12 rounded-lg border-[2px] border-[#D25B5B] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#D9D9D9] focus:outline-none text-gray-800"
-    />
+  type="text"
+  [(ngModel)]="searchQuery" 
+  class="w-full h-full pl-12 rounded-lg border-[2px] border-[#D25B5B] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#D9D9D9] focus:outline-none text-gray-800"
+  (input)="filterMonitors()"
+/>
+
   </div>
   
-  <img 
-    src="../../assets/add.png" 
-    alt="Add Icon" 
-    class="w-20 h-20 cursor-pointer addIcon"
-  />
+  <!-- Botón "Add" que abre el modal -->
+<img 
+src="../../assets/add.png" 
+alt="Add Icon" 
+class="w-20 h-20 cursor-pointer addIcon"
+(click)="openAddMonitorModal()"
+/>
+
 </div>
 
 <div class="flex justify-center items-center carrousel mt-10">
@@ -30,28 +36,44 @@
   />
 
   <!-- Contenedor del Carrusel -->
-<div class="overflow-hidden w-[1038px] ">
-  <!-- Carrusel de Cards -->
-  <div 
-    class="flex transition-transform duration-500 ease-in-out gap-x-4"
-    [style.transform]="'translateX(-' + currentTranslate + 'px)'"
-  >
+  <div class="overflow-hidden w-[1038px] ">
+    <!-- Carrusel de Cards -->
     <div 
-      *ngFor="let monitor of monitors" 
-      class="flex-shrink-0 w-[330px] h-[250px] bg-[#D9D9D9] p-6 flex flex-col justify-center items-center"
+      class="flex transition-transform duration-500 ease-in-out gap-x-4"
+      [style.transform]="'translateX(-' + currentTranslate + 'px)'"
     >
-      <img 
-        src="../../assets/avatar.png" 
-        alt="Avatar" 
-        class="avatarImg w-20 h-20 mb-4"
-      />
-      <h4 class="text-center text-lg font-semibold">{{ monitor.nombre }}</h4>
-      <h4 class="text-center text-lg break-all">{{ monitor.email }}</h4>
-      <h4 class="text-center text-lg">{{ monitor.telefono }}</h4>
+      <div 
+        *ngFor="let monitor of monitors; let i = index" 
+        class="flex-shrink-0 w-[330px] h-[250px] bg-[#D9D9D9] p-6 flex flex-col justify-center items-center relative"
+      >
+       <!-- Botón de Editar -->
+        <button 
+        class="absolute top-2 right-2 text-white rounded-full flex items-center justify-center"
+        (click)="openEditMonitorModal(monitor)"
+        >
+        <img src="../../assets/pencil.png" alt="Edit" class="w-4 h-4 boton" />
+        </button>
+        <!-- Botón de borrar -->
+        <button 
+        *ngIf="monitor.id !== undefined"
+          (click)="deleteMonitor(monitor.id)"
+          class="absolute top-2 left-2 text-white rounded-full flex items-center justify-center"
+        >
+          <img src="../../assets/trash.png" alt="Delete" class="w-4 h-4 boton" />
+        </button>
+
+        <!-- Imagen del Avatar -->
+        <img 
+          src="../../assets/avatar.png" 
+          alt="Avatar" 
+          class="avatarImg w-20 h-20 mb-4"
+        />
+        <h4 class="text-center text-lg font-semibold">{{ monitor.nombre }}</h4>
+        <h4 class="text-center text-lg break-all">{{ monitor.email }}</h4>
+        <h4 class="text-center text-lg">{{ monitor.telefono }}</h4>
+      </div>
     </div>
   </div>
-</div>
-
 
   <!-- Flecha Derecha -->
   <img 
@@ -62,3 +84,57 @@
   />
 </div>
 
+
+<!-- Modal para Añadir/Editar Monitor -->
+<div 
+  class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
+  *ngIf="isModalOpenMonitor"
+>
+  <div class="bg-white p-6 rounded-lg w-[400px]">
+    <h2 class="text-lg font-bold mb-4">{{ isEditingMonitor ? 'Editar Monitor' : 'Añadir Monitor' }}</h2>
+
+    <form (ngSubmit)="isEditingMonitor ? editMonitor() : addMonitor()">
+      <label class="block mb-2">Nombre</label>
+      <input 
+        type="text" 
+        [(ngModel)]="monitorNombre" 
+        name="nombre" 
+        class="w-full mb-4 p-2 border rounded" 
+        required
+      />
+    
+      <label class="block mb-2">Email</label>
+      <input 
+        type="email" 
+        [(ngModel)]="monitorEmail" 
+        name="email" 
+        class="w-full mb-4 p-2 border rounded" 
+        required
+      />
+    
+      <label class="block mb-2">Teléfono</label>
+      <input 
+        type="tel" 
+        [(ngModel)]="monitorTelefono" 
+        name="telefono" 
+        class="w-full mb-4 p-2 border rounded" 
+        required
+      />
+    
+      <button 
+        type="submit" 
+        class="bg-green-500 text-white px-4 py-2 rounded"
+        [disabled]="!monitorNombre || !monitorEmail || !monitorTelefono">
+        Guardar
+      </button>
+    
+      <button 
+        type="button" 
+        class="bg-gray-500 text-white px-4 py-2 rounded ml-2" 
+        (click)="closeModal()">
+        Cancelar
+      </button>
+    </form>
+    
+  </div>
+</div>
