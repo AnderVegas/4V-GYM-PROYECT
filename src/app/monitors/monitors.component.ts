@@ -86,6 +86,9 @@ export class MonitorsComponent implements OnInit {
   openAddMonitorModal(): void {
     this.isModalOpenMonitor = true; // Abrir el modal
     this.isEditingMonitor = false; // Asegurarse de que no estamos en modo edición
+    this.monitorNombre = "";
+    this.monitorEmail = "";
+    this.monitorTelefono = "";
     this.newMonitor = {            // Limpiar los datos
       nombre: '',
       email: '',
