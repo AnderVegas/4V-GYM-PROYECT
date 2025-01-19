@@ -75,11 +75,15 @@ export class ActivitiesComponent implements OnInit {
       alert('Debe seleccionar al menos un monitor y un tipo de actividad.');
       return;
     }
+
+    // Obtener el último ID y calcular el nuevo ID
+    const lastId = this.activities.length > 0 ? Math.max(...this.activities.map(activity => activity.id)) : 0;
+    const newId = lastId + 1;
   
     // Construir la nueva actividad
     const fecha = `${this.selectedDate.toLocaleDateString('en-GB')}, ${this.currentSlot}`;
     const newActivity: Activity = {
-      id: this.activities.length,
+      id: newId,
       fecha,
       monitor: [this.newActivityMonitor1, this.newActivityMonitor2].filter(Boolean) as Monitor[], // Solo monitores válidos
       tipo: this.newActivityType,

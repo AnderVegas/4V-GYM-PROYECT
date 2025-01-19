@@ -36,35 +36,40 @@
           }"
           class="relative border-none align-middle"
         >
-          <ng-container *ngIf="getActivityForSlot(slot) as activity; else freeSlot">
-            <div class="flex items-center justify-between w-full">
-              <div class="flex items-center flex-col justify-center text-center" *ngFor="let monitor of activity.monitor">
-                <img src="../../assets/avatar.png" alt="Avatar" class="w-10 h-15 mb-2">
-                <div>
-                  <p class="font-['Inter'] text-lg">{{ monitor.nombre }}</p>
-                </div>
-              </div>
-              <div class="flex items-center mr-16">
-                <img 
-                  src="../../assets/{{activity.tipo}}.png" 
-                  alt="{{ activity.tipo }}" 
-                  class="w-10 h-15"
-                />
-              </div>
-              <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
-                <button 
-                  class="bg-transparent p-2 focus:outline-none"
-                  (click)="removeActivitie(activity.id)">
-                  <img src="../../assets/trash.png" alt="Delete" class="BotonesAccion" />
-                </button>
-                <button 
-                  class="bg-transparent p-2 focus:outline-none"
-                  (click)="openEditActivityModal(activity)">
-                  <img src="../../assets/pencil.png" alt="Edit" class="BotonesAccion" />
-                </button>
+        <ng-container *ngIf="getActivityForSlot(slot) as activity; else freeSlot">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex items-center flex-col justify-center text-center" *ngFor="let monitor of activity.monitor">
+              <img src="../../assets/avatar.png" alt="Avatar" class="w-10 h-15 mb-2">
+              <div>
+                <p class="font-['Inter'] text-lg">{{ monitor.nombre }}</p>
               </div>
             </div>
-          </ng-container>
+            <div class="flex items-center mr-16">
+              <img 
+                src="../../assets/{{activity.tipo}}.png" 
+                alt="{{ activity.tipo }}" 
+                class="w-10 h-15"
+              />
+            </div>
+            <!-- Añadir ID aquí -->
+            <!-- <div class="flex items-center ml-4 text-gray-500 text-sm">
+              <p>ID: {{ activity.id }}</p>
+            </div> -->
+            <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
+              <button 
+                class="bg-transparent p-2 focus:outline-none"
+                (click)="removeActivitie(activity.id)">
+                <img src="../../assets/trash.png" alt="Delete" class="BotonesAccion" />
+              </button>
+              <button 
+                class="bg-transparent p-2 focus:outline-none"
+                (click)="openEditActivityModal(activity)">
+                <img src="../../assets/pencil.png" alt="Edit" class="BotonesAccion" />
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        
           <ng-template #freeSlot>
             <div class="flex justify-center items-center h-full font-bold text-white">
               FREE
