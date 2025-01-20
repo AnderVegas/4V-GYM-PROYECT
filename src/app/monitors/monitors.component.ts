@@ -27,6 +27,7 @@ export class MonitorsComponent implements OnInit {
     telefono: ''
   };
 
+  // Parametros para el carrousel
   currentIndex: number = 0;
   currentTranslate: number = 0; // Controla el desplazamiento
   cardWidth: number = 330; // Ancho del card + margen (330px ancho)
@@ -37,7 +38,7 @@ export class MonitorsComponent implements OnInit {
   monitorEmail: string = '';
   monitorTelefono: string = '';
 
-  // Para el filtro de búsqueda
+  // Variable locale para manejar el filtro de búsqueda
   searchQuery: string = '';
 
   constructor(private entitiesService: EntitiesService) {}
@@ -53,7 +54,7 @@ export class MonitorsComponent implements OnInit {
 
   deleteMonitor(monitorId: number): void {
     if (monitorId === undefined) return;
-    this.entitiesService.removeMonitors(monitorId);  // Cambié removeActivity por removeMonitors
+    this.entitiesService.removeMonitors(monitorId);
     this.monitors = this.entitiesService.getMonitors();
   }
   
@@ -84,12 +85,14 @@ export class MonitorsComponent implements OnInit {
   }
 
   openAddMonitorModal(): void {
-    this.isModalOpenMonitor = true; // Abrir el modal
+    this.isModalOpenMonitor = true;
     this.isEditingMonitor = false; // Asegurarse de que no estamos en modo edición
+
+    // Limpiar datos
     this.monitorNombre = "";
     this.monitorEmail = "";
     this.monitorTelefono = "";
-    this.newMonitor = {            // Limpiar los datos
+    this.newMonitor = {           
       nombre: '',
       email: '',
       telefono: ''
@@ -108,12 +111,12 @@ export class MonitorsComponent implements OnInit {
     this.monitorTelefono = monitor.telefono;
   }
   
-
+  // Cerrar el modal
   closeModal(): void {
-    this.isModalOpenMonitor = false; // Cerrar el modal
+    this.isModalOpenMonitor = false;
   }
 
-   // El método para añadir monitor (no cambia mucho, solo usa las variables locales)
+   // Método para añadir monitor 
    addMonitor(): void {
     if (!this.monitorNombre || !this.monitorEmail || !this.monitorTelefono) {
       alert('Debe completar todos los campos');
@@ -131,7 +134,7 @@ export class MonitorsComponent implements OnInit {
     this.monitors = this.entitiesService.getMonitors();
   }
 
-  // El método para editar un monitor
+  // Método para editar un monitor
   editMonitor(): void {
     if (!this.monitorNombre || !this.monitorEmail || !this.monitorTelefono) {
       alert('Debe completar todos los campos');
@@ -164,7 +167,7 @@ export class MonitorsComponent implements OnInit {
     }
   
     // Restablecer el índice y actualizar los monitores visibles después de filtrar
-    this.currentIndex = 0;  // Restablecer al primer índice
+    this.currentIndex = 0;  
     this.updateVisibleMonitors();  // Actualizar los monitores visibles
   }
   

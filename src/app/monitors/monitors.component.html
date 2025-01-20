@@ -62,7 +62,6 @@ class="w-20 h-20 cursor-pointer addIcon"
           <img src="../../assets/trash.png" alt="Delete" class="w-4 h-4 boton" />
         </button>
 
-        <!-- Imagen del Avatar -->
         <img 
           src="../../assets/avatar.png" 
           alt="Avatar" 
@@ -90,51 +89,64 @@ class="w-20 h-20 cursor-pointer addIcon"
   class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
   *ngIf="isModalOpenMonitor"
 >
-  <div class="bg-white p-6 rounded-lg w-[400px]">
-    <h2 class="text-lg font-bold mb-4">{{ isEditingMonitor ? 'Editar Monitor' : 'Añadir Monitor' }}</h2>
+  <div class="bg-white p-6 rounded-lg w-[400px] flex flex-col relative">
+    <h2 
+      class="absolute top-4 left-4 text-lg font-bold border border-black rounded-lg px-2 py-1"
+    >
+      {{ isEditingMonitor ? 'Editar Monitor' : 'Añadir Monitor' }}
+    </h2>
 
-    <form (ngSubmit)="isEditingMonitor ? editMonitor() : addMonitor()">
-      <label class="block mb-2">Nombre</label>
+    <div class="relative flex items-center justify-center mt-12 mb-4">
+      <img 
+        src="../../assets/avatar.png" 
+        alt="Avatar" 
+        class="avatarImg w-20 h-20"
+      />
+    </div>
+
+    <form (ngSubmit)="isEditingMonitor ? editMonitor() : addMonitor()" class="w-full">
       <input 
         type="text" 
         [(ngModel)]="monitorNombre" 
         name="nombre" 
-        class="w-full mb-4 p-2 border rounded" 
+        placeholder="Nombre"
+        class="w-full mb-2 p-2 border rounded bg-[#D9D9D9] placeholder-black" 
         required
       />
     
-      <label class="block mb-2">Email</label>
       <input 
         type="email" 
         [(ngModel)]="monitorEmail" 
         name="email" 
-        class="w-full mb-4 p-2 border rounded" 
+        placeholder="Email"
+        class="w-full mb-2 p-2 border rounded bg-[#D9D9D9] placeholder-black" 
         required
       />
     
-      <label class="block mb-2">Teléfono</label>
       <input 
         type="tel" 
         [(ngModel)]="monitorTelefono" 
         name="telefono" 
-        class="w-full mb-4 p-2 border rounded" 
+        placeholder="Teléfono"
+        class="w-full mb-2 p-2 border rounded bg-[#D9D9D9] placeholder-black" 
         required
       />
     
-      <button 
-        type="submit" 
-        class="bg-green-500 text-white px-4 py-2 rounded"
-        [disabled]="!monitorNombre || !monitorEmail || !monitorTelefono">
-        Guardar
-      </button>
+      <!-- Contenedor de botones -->
+      <div class="flex justify-between items-center mt-4">
+        <button 
+          type="submit" 
+          class="bg-[#D25B5B] text-white px-4 py-1 rounded">
+          ACEPTAR
+        </button>
     
-      <button 
-        type="button" 
-        class="bg-gray-500 text-white px-4 py-2 rounded ml-2" 
-        (click)="closeModal()">
-        Cancelar
-      </button>
+        <button 
+          type="button" 
+          class="bg-[#D25B5B] text-white px-4 py-1 rounded ml-2" 
+          (click)="closeModal()">
+          CANCELAR
+        </button>
+      </div>
     </form>
-    
   </div>
 </div>

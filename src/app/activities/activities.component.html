@@ -48,10 +48,10 @@
               <img 
                 src="../../assets/{{activity.tipo}}.png" 
                 alt="{{ activity.tipo }}" 
-                class="w-10 h-15"
+                class="w-10 h-15" 
               />
             </div>
-            <!-- Añadir ID aquí -->
+            <!-- Añadir ID para depurar -->
             <!-- <div class="flex items-center ml-4 text-gray-500 text-sm">
               <p>ID: {{ activity.id }}</p>
             </div> -->
@@ -96,38 +96,51 @@
   class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
   *ngIf="isModalOpen"
 >
-  <div class="bg-white p-6 rounded-lg w-[400px]">
-    <h2 class="text-lg font-bold mb-4">{{ isEditing ? 'Editar Actividad' : 'Añadir Actividad' }}</h2>
+  <div class="bg-white p-6 rounded-lg w-[400px] flex flex-col relative">
+    <h2 
+      class="absolute top-4 left-4 text-lg font-bold border border-black rounded-lg px-2 py-1"
+    >
+    {{ isEditing ? 'Editar Actividad' : 'Añadir Actividad' }}
+    </h2>
 
     <form (ngSubmit)="isEditing ? saveEditedActivity() : addActivity()">
-      <label class="block mb-2">Monitor 1</label>
-<select [(ngModel)]="newActivityMonitor1" name="monitor1" class="w-full mb-4 p-2 border rounded">
-  <option *ngFor="let monitor of monitors" [ngValue]="monitor">{{ monitor.nombre }}</option>
-</select>
+      <label class="block mb-2 mt-10">Monitor 1</label>
+      <select [(ngModel)]="newActivityMonitor1" name="monitor1" class="w-full mb-4 p-2 border rounded bg-[#D9D9D9]">
+        <option *ngFor="let monitor of monitors" [ngValue]="monitor">{{ monitor.nombre }}</option>
+      </select>
 
-<label class="block mb-2">Monitor 2 (Opcional)</label>
-<select [(ngModel)]="newActivityMonitor2" name="monitor2" class="w-full mb-4 p-2 border rounded">
-  <option *ngFor="let monitor of getFilteredMonitors(newActivityMonitor1)" [ngValue]="monitor">
-    {{ monitor.nombre }}
-  </option>
-</select>
+      <label class="block mb-2" >Monitor 2 (Opcional)</label>
+      <select [(ngModel)]="newActivityMonitor2" name="monitor2" class="w-full mb-4 p-2 border rounded bg-[#D9D9D9]">
+        <option [ngValue]="null" >
+          Ninguno
+        </option>
+        <option *ngFor="let monitor of getFilteredMonitors(newActivityMonitor1)" [ngValue]="monitor">
+          {{ monitor.nombre }}
+        </option>
+      </select>
 
 
       <label class="block mb-2">Tipo de Actividad</label>
-      <select [(ngModel)]="newActivityType" name="tipo" class="w-full mb-4 p-2 border rounded">
+      <select [(ngModel)]="newActivityType" name="tipo" class="w-full mb-4 p-2 border rounded bg-[#D9D9D9]">
         <option *ngFor="let type of activityTypes" [value]="type">{{ type }}</option>
       </select>
 
-      <button 
-        type="submit" 
-        class="bg-green-500 text-white px-4 py-2 rounded" 
-        [disabled]="!newActivityMonitor1 && !newActivityMonitor2">
-        Guardar
-      </button>
-
-      <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded ml-2" (click)="closeModal()">
-        Cancelar
-      </button>
+      <div class="flex justify-between items-center mt-4">
+        <button 
+          type="submit" 
+          [disabled]="!newActivityMonitor1 && !newActivityMonitor2"
+          class="bg-[#D25B5B] text-white px-4 py-1 rounded">
+          
+          ACEPTAR
+        </button>
+    
+        <button 
+          type="button" 
+          class="bg-[#D25B5B] text-white px-4 py-1 rounded ml-2" 
+          (click)="closeModal()">
+          CANCELAR
+        </button>
+      </div>
     </form>
   </div>
 </div>

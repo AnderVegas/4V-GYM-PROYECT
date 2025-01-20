@@ -141,9 +141,9 @@ export class EntitiesService {
   }
 
   addMonitor(monitor: Monitor): void {
-  monitor.id = this.monitors.length; // Asignamos un ID único
-  this.monitors.push(monitor); // Agregar el nuevo monitor a la lista
-}
+    monitor.id = this.monitors.length; // Asignamos un ID único
+    this.monitors.push(monitor);
+  }
 
 
 }

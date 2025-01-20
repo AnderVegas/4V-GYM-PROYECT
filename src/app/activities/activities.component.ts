@@ -46,6 +46,7 @@ export class ActivitiesComponent implements OnInit {
     this.isModalOpen = true;
   }
 
+  // Limpiar PopUp de editar actividad al abrirlo
   openEditActivityModal(activity: Activity): void {
     this.isEditing = true;
     this.editingActivityId = activity.id;
@@ -76,6 +77,11 @@ export class ActivitiesComponent implements OnInit {
       return;
     }
 
+    // Validación para error de monitor duplicado
+    if(this.newActivityMonitor1 == this.newActivityMonitor2){
+      this.newActivityMonitor2 = null;
+    }
+
     // Obtener el último ID y calcular el nuevo ID
     const lastId = this.activities.length > 0 ? Math.max(...this.activities.map(activity => activity.id)) : 0;
     const newId = lastId + 1;
@@ -91,7 +97,7 @@ export class ActivitiesComponent implements OnInit {
   
     this.entitiesService.activitys.push(newActivity); // Guardar la nueva actividad
     this.activities = this.entitiesService.getActivitys(); // Actualizar la lista de actividades
-    this.closeModal(); // Cerrar el modal
+    this.closeModal(); 
   }
   
   saveEditedActivity(): void {
@@ -99,6 +105,10 @@ export class ActivitiesComponent implements OnInit {
     if (this.editingActivityId === null || !this.selectedDate || !this.newActivityType || (!this.newActivityMonitor1 && !this.newActivityMonitor2)) {
       alert('Debe seleccionar al menos un monitor y un tipo de actividad.');
       return;
+    }
+
+    if(this.newActivityMonitor1 == this.newActivityMonitor2){
+      this.newActivityMonitor2 = null;
     }
   
     const editedActivity = this.activities.find(a => a.id === this.editingActivityId);
@@ -109,7 +119,7 @@ export class ActivitiesComponent implements OnInit {
     }
   
     this.activities = this.entitiesService.getActivitys(); // Actualizar la lista de actividades
-    this.closeModal(); // Cerrar el modal
+    this.closeModal(); 
   }
   
 
