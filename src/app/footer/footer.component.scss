@@ -5,3 +5,14 @@
 .Monitors{
     font-size: 20px;
 }
+
+
+
+@media (min-width: 768px) {
+    .footerPage{
+        position: fixed; /* Posición fija en la parte inferior de la pantalla */
+        left: 0;
+        right: 0;
+        bottom: 0; 
+    }
+}

@@ -71,22 +71,35 @@ export class ActivitiesComponent implements OnInit {
   }
 
   addActivity(): void {
-    // Validar que al menos un monitor y el tipo de actividad estén seleccionados.
     if (!this.selectedDate || !this.newActivityType || (!this.newActivityMonitor1 && !this.newActivityMonitor2)) {
       alert('Debe seleccionar al menos un monitor y un tipo de actividad.');
       return;
     }
-
-    // Validación para error de monitor duplicado
-    if(this.newActivityMonitor1 == this.newActivityMonitor2){
-      this.newActivityMonitor2 = null;
+  
+    // Validar monitores según tipo de actividad
+    if (this.newActivityType === 'BodyPump' && (!this.newActivityMonitor1 || !this.newActivityMonitor2)) {
+      alert('BodyPump requiere dos monitores.');
+      return;
     }
-
+    
+    if (this.newActivityType === 'Spinning' && (!this.newActivityMonitor1 || this.newActivityMonitor2)) {
+      alert('Spinning requiere exactamente un monitor.');
+      return;
+    }
+  
+    if (this.newActivityType === 'Pilates' && !this.newActivityMonitor1) {
+      alert('Pilates requiere al menos un monitor.');
+      return;
+    }
+  
+    if (this.newActivityMonitor1 === this.newActivityMonitor2) {
+      this.newActivityMonitor2 = null; // Evitar duplicados
+    }
+  
     // Obtener el último ID y calcular el nuevo ID
     const lastId = this.activities.length > 0 ? Math.max(...this.activities.map(activity => activity.id)) : 0;
     const newId = lastId + 1;
   
-    // Construir la nueva actividad
     const fecha = `${this.selectedDate.toLocaleDateString('en-GB')}, ${this.currentSlot}`;
     const newActivity: Activity = {
       id: newId,
@@ -95,32 +108,48 @@ export class ActivitiesComponent implements OnInit {
       tipo: this.newActivityType,
     };
   
-    this.entitiesService.activitys.push(newActivity); // Guardar la nueva actividad
-    this.activities = this.entitiesService.getActivitys(); // Actualizar la lista de actividades
+    this.entitiesService.activitys.push(newActivity); // Guardar actividad
+    this.activities = this.entitiesService.getActivitys(); // Actualizar lista
     this.closeModal(); 
   }
   
   saveEditedActivity(): void {
-    // Validar que al menos un monitor y el tipo de actividad estén seleccionados.
     if (this.editingActivityId === null || !this.selectedDate || !this.newActivityType || (!this.newActivityMonitor1 && !this.newActivityMonitor2)) {
       alert('Debe seleccionar al menos un monitor y un tipo de actividad.');
       return;
     }
-
-    if(this.newActivityMonitor1 == this.newActivityMonitor2){
+  
+    // Validar monitores según tipo de actividad
+    if (this.newActivityType === 'BodyPump' && (!this.newActivityMonitor1 || !this.newActivityMonitor2)) {
+      alert('BodyPump requiere dos monitores.');
+      return;
+    }
+  
+    if (this.newActivityType === 'Spinning' && (!this.newActivityMonitor1 || this.newActivityMonitor2)) {
+      alert('Spinning requiere exactamente un monitor.');
+      return;
+    }
+  
+    if (this.newActivityType === 'Pilates' && !this.newActivityMonitor1) {
+      alert('Pilates requiere al menos un monitor.');
+      return;
+    }
+  
+    if (this.newActivityMonitor1 === this.newActivityMonitor2) {
       this.newActivityMonitor2 = null;
     }
   
     const editedActivity = this.activities.find(a => a.id === this.editingActivityId);
     if (editedActivity) {
       editedActivity.fecha = `${this.selectedDate.toLocaleDateString('en-GB')}, ${this.currentSlot}`;
-      editedActivity.monitor = [this.newActivityMonitor1, this.newActivityMonitor2].filter(Boolean) as Monitor[]; // Solo monitores válidos
+      editedActivity.monitor = [this.newActivityMonitor1, this.newActivityMonitor2].filter(Boolean) as Monitor[];
       editedActivity.tipo = this.newActivityType;
     }
   
-    this.activities = this.entitiesService.getActivitys(); // Actualizar la lista de actividades
-    this.closeModal(); 
+    this.activities = this.entitiesService.getActivitys(); // Actualizar lista
+    this.closeModal();
   }
+  
   
 
   getFilteredMonitors(monitor: Monitor | null): Monitor[] {

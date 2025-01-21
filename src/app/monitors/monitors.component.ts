@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EntitiesService, Monitor } from '../utils/entities.service';
 import { FormsModule } from '@angular/forms';
+import { CarouselModule } from 'primeng/carousel';  // Importa el módulo de PrimeNG
 
 @Component({
   selector: 'app-monitors',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CarouselModule],
   templateUrl: './monitors.component.html',
   styleUrls: ['./monitors.component.scss']
 })
@@ -43,6 +44,7 @@ export class MonitorsComponent implements OnInit {
 
   constructor(private entitiesService: EntitiesService) {}
 
+
   ngOnInit(): void {
     this.monitors = this.entitiesService.getMonitors();
     this.updateVisibleMonitors();
@@ -76,7 +78,11 @@ export class MonitorsComponent implements OnInit {
     }
     this.updateTranslate();
   }
-
+  onPageChange(event: any): void {
+    this.currentIndex = event.page;
+    this.updateTranslate();
+  }
+  
   updateTranslate(): void {
     // Usamos currentTranslate para controlar el desplazamiento horizontal
     this.currentTranslate = this.currentIndex * this.cardWidth;

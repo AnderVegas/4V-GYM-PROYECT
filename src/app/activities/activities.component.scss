@@ -1,22 +1,24 @@
-#divTablas{
-    margin-left: 200px;
+/* Margen aplicado solo en pantallas más grandes que móviles */
+@media (min-width: 768px) {
+    #divTablas {
+        margin-left: 200px;
+    }
 }
 
-#fecha{
+#fecha {
     font-family: 'Roboto Mono', monospace;
-    font-size: 27px;    
+    font-size: 27px;
     color: #6B6B6B;
 }
 
-.BotonesAccion{
+.BotonesAccion {
     width: 25px;
 }
 
-td{
+td {
     font-family: 'Inter';
 }
 
-img{
+img {
     width: 60px;
 }
-

@@ -1,16 +1,16 @@
-<div class="flex items-start space-x-4">
+<div class="flex flex-wrap items-start space-x-4">
   <!-- Calendario -->
   <datepicker-inline></datepicker-inline>
 
-  <div class="w-[37%]" id="divTablas">
-    <table class="w-full table-auto border-collapse mt-10">
+  <div class="w-full md:w-[37%] p-4 md:ml-10" id="divTablas">
+    <table class="w-full table-auto border-collapse mt-10 max-w-[95%] mx-auto">
       <tr class="h-24 text-center">
         <td>
           <img 
             src="../../assets/mingcute_arrows-left-fill.png" 
             alt="Left Arrow" 
             (click)="previousDate()" 
-            style="cursor: pointer;">
+            class="cursor-pointer">
         </td>
         <td>
           <h1 class="border-none align-middle" id="fecha">{{ selectedDate | date: 'd MMMM yyyy' }}</h1>
@@ -20,83 +20,83 @@
             src="../../assets/mingcute_arrows-right-fill.png" 
             alt="Right Arrow" 
             (click)="nextDate()" 
-            style="cursor: pointer;">
+            class="cursor-pointer">
         </td>
       </tr>
     </table>
 
     <!-- Tabla -->
-    <table class="w-[90%] h-[370px] table-auto border-collapse align-middle">
-      <tr *ngFor="let slot of timeSlots" class="h-24 text-center">
-        <td class="w-12 border-none align-middle">{{ slot }}</td>
-        <td
-          [ngClass]="{
-            'bg-[#D9D9D9]': getActivityForSlot(slot),
-            'bg-[#2B7D3D] text-[#FFFFFF]': !getActivityForSlot(slot)
-          }"
-          class="relative border-none align-middle"
-        >
-        <ng-container *ngIf="getActivityForSlot(slot) as activity; else freeSlot">
-          <div class="flex items-center justify-between w-full">
-            <div class="flex items-center flex-col justify-center text-center" *ngFor="let monitor of activity.monitor">
-              <img src="../../assets/avatar.png" alt="Avatar" class="w-10 h-15 mb-2">
-              <div>
-                <p class="font-['Inter'] text-lg">{{ monitor.nombre }}</p>
-              </div>
-            </div>
-            <div class="flex items-center mr-16">
-              <img 
-                src="../../assets/{{activity.tipo}}.png" 
-                alt="{{ activity.tipo }}" 
-                class="w-10 h-15" 
-              />
-            </div>
-            <!-- Añadir ID para depurar -->
-            <!-- <div class="flex items-center ml-4 text-gray-500 text-sm">
-              <p>ID: {{ activity.id }}</p>
-            </div> -->
-            <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
-              <button 
-                class="bg-transparent p-2 focus:outline-none"
-                (click)="removeActivitie(activity.id)">
-                <img src="../../assets/trash.png" alt="Delete" class="BotonesAccion" />
-              </button>
-              <button 
-                class="bg-transparent p-2 focus:outline-none"
-                (click)="openEditActivityModal(activity)">
-                <img src="../../assets/pencil.png" alt="Edit" class="BotonesAccion" />
-              </button>
-            </div>
-          </div>
-        </ng-container>
-        
-          <ng-template #freeSlot>
-            <div class="flex justify-center items-center h-full font-bold text-white">
-              FREE
-              <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
-                <button 
-                  class="bg-transparent p-2 focus:outline-none"
-                  (click)="openAddActivityModal(slot)">
+    <div class="overflow-x-auto">
+      <table class="w-full h-[370px] table-auto border-collapse align-middle">
+        <tr *ngFor="let slot of timeSlots" class="h-24 text-center">
+          <td class="w-12 border-none align-middle">{{ slot }}</td>
+          <td
+            [ngClass]="{
+              'bg-[#D9D9D9]': getActivityForSlot(slot),
+              'bg-[#2B7D3D] text-[#FFFFFF]': !getActivityForSlot(slot)
+            }"
+            class="relative border-none align-middle"
+          >
+            <ng-container *ngIf="getActivityForSlot(slot) as activity; else freeSlot">
+              <div class="flex items-center justify-between w-full">
+                <div class="flex items-center flex-col justify-center text-center" *ngFor="let monitor of activity.monitor">
+                  <img src="../../assets/avatar.png" alt="Avatar" class="w-10 h-15 mb-2">
+                  <div>
+                    <p class="font-['Inter'] text-lg">{{ monitor.nombre }}</p>
+                  </div>
+                </div>
+                <div class="flex items-center mr-16">
                   <img 
-                    src="../../assets/add.png" 
-                    alt="Añadir" 
-                    class="BotonesAccion" />
-                </button>
+                    src="../../assets/{{activity.tipo}}.png" 
+                    alt="{{ activity.tipo }}" 
+                    class="w-10 h-15" 
+                  />
+                </div>
+                <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
+                  <button 
+                    class="bg-transparent p-2 focus:outline-none"
+                    (click)="removeActivitie(activity.id)">
+                    <img src="../../assets/trash.png" alt="Delete" class="BotonesAccion" />
+                  </button>
+                  <button 
+                    class="bg-transparent p-2 focus:outline-none"
+                    (click)="openEditActivityModal(activity)">
+                    <img src="../../assets/pencil.png" alt="Edit" class="BotonesAccion" />
+                  </button>
+                </div>
               </div>
-            </div>
-          </ng-template>
-        </td>
-      </tr>
-    </table>
+            </ng-container>
+            
+            <ng-template #freeSlot>
+              <div class="flex justify-center items-center h-full font-bold text-white">
+                FREE
+                <div class="flex flex-col justify-between items-center absolute top-1 right-1 bottom-2">
+                  <button 
+                    class="bg-transparent p-2 focus:outline-none"
+                    (click)="openAddActivityModal(slot)">
+                    <img 
+                      src="../../assets/add.png" 
+                      alt="Añadir" 
+                      class="BotonesAccion" />
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
+
+
 
 <!-- Modal -->
 <div 
   class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
   *ngIf="isModalOpen"
 >
-  <div class="bg-white p-6 rounded-lg w-[400px] flex flex-col relative">
+  <div class="bg-white p-6 rounded-lg w-full sm:w-[400px] flex flex-col relative">
     <h2 
       class="absolute top-4 left-4 text-lg font-bold border border-black rounded-lg px-2 py-1"
     >
@@ -109,28 +109,34 @@
         <option *ngFor="let monitor of monitors" [ngValue]="monitor">{{ monitor.nombre }}</option>
       </select>
 
-      <label class="block mb-2" >Monitor 2 (Opcional)</label>
+      <label class="block mb-2">Monitor 2 (Opcional)</label>
       <select [(ngModel)]="newActivityMonitor2" name="monitor2" class="w-full mb-4 p-2 border rounded bg-[#D9D9D9]">
-        <option [ngValue]="null" >
-          Ninguno
-        </option>
+        <option [ngValue]="null">Ninguno</option>
         <option *ngFor="let monitor of getFilteredMonitors(newActivityMonitor1)" [ngValue]="monitor">
           {{ monitor.nombre }}
         </option>
       </select>
-
 
       <label class="block mb-2">Tipo de Actividad</label>
       <select [(ngModel)]="newActivityType" name="tipo" class="w-full mb-4 p-2 border rounded bg-[#D9D9D9]">
         <option *ngFor="let type of activityTypes" [value]="type">{{ type }}</option>
       </select>
 
+      <!-- Mensaje dinámico basado en el tipo de actividad -->
+      <div class="text-sm text-gray-600 mb-4">
+        <ng-container [ngSwitch]="newActivityType">
+          <p *ngSwitchCase="'BodyPump'">Esta actividad requiere dos monitores.</p>
+          <p *ngSwitchCase="'Spinning'">Esta actividad requiere exactamente un monitor.</p>
+          <p *ngSwitchCase="'Pilates'">Esta actividad requiere un monitor obligatorio y otro opcional.</p>
+        </ng-container>
+      </div>
+
+
       <div class="flex justify-between items-center mt-4">
         <button 
           type="submit" 
           [disabled]="!newActivityMonitor1 && !newActivityMonitor2"
           class="bg-[#D25B5B] text-white px-4 py-1 rounded">
-          
           ACEPTAR
         </button>
     

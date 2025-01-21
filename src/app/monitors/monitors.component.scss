@@ -62,5 +62,27 @@
     background-color: #9E1C1C;
   }
   
+  // Responsive
+  @media (max-width: 768px) {
+    .searchBar {
+      width: 100%;
+      padding: 0 16px; 
+      margin-top: 20px;
+    }
   
+    .busqueda {
+      width: 100%; 
+      margin: 0; 
+    }
+  
+    .addIcon {
+      margin-top: 20px;
+      margin-left: 0;
+      align-self: center; 
+    }
+  
+    .carrouselMonitors {
+      margin-bottom: 100px;
+    }
+  }
   
